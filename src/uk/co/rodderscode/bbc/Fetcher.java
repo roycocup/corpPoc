@@ -10,16 +10,37 @@ public class Fetcher {
     public static void main(String[] args)
     {
         Fetcher f = new Fetcher();
-        System.out.println("hey");
+        f.scan();
     }
 
 
-    public void scan() throws Exception
+    public void print(Object s)
     {
-        Scanner sc = new Scanner(System.in);
-        while (sc.hasNextLong()) {
-            long aLong = sc.nextLong();
+        System.out.println(s);
+    }
+
+    public void scan()
+    {
+        Scanner sc = null;
+        try{
+            sc = new Scanner(System.in).useDelimiter("\\n");
+        } catch (Exception e){
+            System.out.println(e);
         }
+
+        print("Starting loop");
+
+
+        while(sc.equals("\\n")) {
+            print("Looping...");
+            if (sc.hasNext()){
+                s = sc.next();
+                print(s);
+            }
+
+        }
+
+        print("End loop");
     }
 
 
