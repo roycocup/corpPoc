@@ -1,12 +1,15 @@
+package uk.co.rodderscode.bbc;
+
 import java.net.*;
 import java.io.*;
 
 
 public class Fetcher {
 
-    public static void main(String[] argv)
+    public static void main(String[] args)
     {
         Fetcher f = new Fetcher();
+        System.out.println("hey");
     }
 
 
