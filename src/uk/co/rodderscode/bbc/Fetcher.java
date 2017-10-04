@@ -2,6 +2,7 @@ package uk.co.rodderscode.bbc;
 
 import java.net.*;
 import java.io.*;
+import java.util.Scanner;
 
 
 public class Fetcher {
@@ -10,6 +11,15 @@ public class Fetcher {
     {
         Fetcher f = new Fetcher();
         System.out.println("hey");
+    }
+
+
+    public void scan() throws Exception
+    {
+        Scanner sc = new Scanner(System.in);
+        while (sc.hasNextLong()) {
+            long aLong = sc.nextLong();
+        }
     }
 
 
