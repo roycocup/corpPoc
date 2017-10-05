@@ -17,6 +17,13 @@ jar {
     version =  '0.1.0'
 }
 
+run {
+    standardInput = System.in
+    standardOutput = System.out
+}
+
+
+
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
