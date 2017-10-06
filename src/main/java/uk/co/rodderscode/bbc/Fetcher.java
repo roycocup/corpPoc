@@ -133,10 +133,12 @@ public class Fetcher {
 
             if (header.containsKey(null)){
                 List<String> l = header.get(null);
-                Pattern p = Pattern.compile(".*([\\d]*).*");
-                System.out.println("Matching on " + l.toString());
+                Pattern p = Pattern.compile(".*?([\\d]+).*?");
+                System.out.println("Should match");
                 Matcher m = p.matcher(l.toString());
-                System.out.println("group: " + m.group());
+
+                System.out.println("matches? " + m.group(1));
+
                 details.put("Status_code", (m.matches())? m.group(1) : "not");
             }
 
