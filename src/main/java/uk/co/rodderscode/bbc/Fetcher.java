@@ -4,7 +4,6 @@ package uk.co.rodderscode.bbc;
 import org.apache.commons.validator.routines.UrlValidator;
 import org.json.JSONWriter;
 
-import java.lang.reflect.Array;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.*;
@@ -24,11 +23,22 @@ public class Fetcher {
     public static void main(String[] args)
     {
         Fetcher f = new Fetcher();
-        f.run();
     }
 
-    
-    public void run()
+
+
+
+
+
+
+
+
+
+    /**********************
+     *  Proof of concept  *
+     *********************/
+
+    public void poc()
     {
         // clear the screen
         clear();
@@ -75,7 +85,7 @@ public class Fetcher {
         LinkedList<HashMap> rawData = new LinkedList<>();
         for(String url : validUrls)
         {
-            rawData.add(fetchUrlInfo(url));
+            rawData.add(pocFetchUrlInfo(url));
         }
 
         StringBuilder sitesInfoJson = new StringBuilder();
@@ -148,7 +158,7 @@ public class Fetcher {
      * @param sUrl
      * @return
      */
-    public static HashMap fetchUrlInfo(String sUrl)
+    public static HashMap pocFetchUrlInfo(String sUrl)
     {
         // todo: timeout after x seconds
         HashMap<String, String> data = new HashMap();
