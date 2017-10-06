@@ -4,6 +4,7 @@ package uk.co.rodderscode.bbc;
 import org.apache.commons.validator.routines.UrlValidator;
 import org.json.JSONWriter;
 
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.*;
@@ -25,7 +26,7 @@ public class Fetcher {
         Fetcher f = new Fetcher();
         f.run();
     }
-    
+
     
     public void run()
     {
@@ -47,7 +48,6 @@ public class Fetcher {
         }
 
 
-
         // validate urls
         final ArrayList<String> validUrls = new ArrayList<>();
         final ArrayList<String> invalidUrls = new ArrayList<>();
@@ -60,43 +60,43 @@ public class Fetcher {
         }
 
 
-        System.out.println("These are valid");
-        for(String validUrl : validUrls)
-            System.out.println(validUrl);
+//        System.out.println("These are valid");
+//        for(String validUrl : validUrls)
+//            System.out.println(validUrl);
+//
+//
+//        System.out.println();
+//        System.out.println("These are NOT valid");
+//        for(String invalidUrl : invalidUrls)
+//            System.out.println(invalidUrl);
 
 
-        System.out.println();
-        System.out.println("These are NOT valid");
-        for(String invalidUrl : invalidUrls)
-            System.out.println(invalidUrl);
-
-
-        // todo: fetch urls, store response, response time, content length, date, error if not reachable,
-        ArrayList<LinkedList<HashMap>> rawData = new ArrayList<>();
+        // fetch urls, store response, response time, content length, date, error if not reachable,
+        LinkedList<HashMap> rawData = new LinkedList<>();
         for(String url : validUrls)
         {
             rawData.add(fetchUrlInfo(url));
         }
 
-        StringBuilder s = new StringBuilder();
-        JSONWriter jsonWriter = new JSONWriter(s).object();
+        StringBuilder sitesInfoJson = new StringBuilder();
+        JSONWriter jsonWriter = new JSONWriter(sitesInfoJson).object();
 
 
         jsonWriter.key("data").value(rawData);
 
         jsonWriter.endObject();
 
-        System.out.println(s.toString());
 
 
-
-        // todo: make calculations
-//        HashMap<String, Integer> stats;
-//        for(HashMap m : rawData)
-//        {
-//            if (rawData.get())
-//            stats.put("Status_Code", m)
-//        }
+        // collect stats
+        HashMap<String, Integer> stats;
+        for(HashMap details : rawData)
+        {
+            System.out.println(rawData);
+        }
+            
+                
+        
 
 
         // todo: compose maps
@@ -116,30 +116,27 @@ public class Fetcher {
      * @param sUrl
      * @return
      */
-    public static LinkedList<HashMap> fetchUrlInfo(String sUrl)
+    public static HashMap fetchUrlInfo(String sUrl)
     {
         // todo: timeout after x seconds
-        LinkedList<HashMap> data = new LinkedList<>();
-        HashMap<String, String> details = new HashMap();
-        details.put("Url", sUrl);
+        HashMap<String, String> data = new HashMap();
+        data.put("Url", sUrl);
         try {
             URLConnection conn = new URL(sUrl).openConnection();
             conn.getInputStream();
             Map<String, List<String>> header = conn.getHeaderFields();
-//            System.out.println(header);
 
             if (header.containsKey("Content-Length"))
-                details.put("Content_length", header.get("Content-Length").toString());
+                data.put("Content_length", header.get("Content-Length").toString());
 
             if (header.containsKey(null)){
                 List<String> l = header.get(null);
                 Pattern p = Pattern.compile("([\\d]{3})");
                 Matcher m = p.matcher(l.toString());
-                details.put("Status_code", (m.find())? m.group(1) : "");
+                data.put("Status_code", (m.find())? m.group(1) : "");
             }
 
-            details.put("Date", header.get("Date").toString());
-            data.add(details);
+            data.put("Date", header.get("Date").toString());
 
         } catch (Exception e) {
             //todo: is the url not valid because not valid protocol
@@ -148,8 +145,7 @@ public class Fetcher {
 //                return false;
 //            }
             //todo: specify malformed, illegal etc...
-            details.put("error", e.getClass().toString());
-            data.add(details);
+            data.put("error", e.getClass().toString());
         }
 
         return data;
