@@ -124,13 +124,17 @@ public class Fetcher {
 
         jsonwriter2.key("Stats").value(finalstats);
         jsonwriter2.endObject();
-        
+
+
+        System.out.println(sitesInfoJson);
         System.out.println(translatedVars);
             
 
-        // todo: output json
+
         // todo: polish
+        // todo: remove initial keys from json
         // todo: how to deploy gradle
+
     }
 
     /**
