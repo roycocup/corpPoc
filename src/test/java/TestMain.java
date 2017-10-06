@@ -26,23 +26,26 @@ public class TestMain {
 
 
     @Test
-    public void testRegex()
+    public void testRandomSentence()
     {
 
         String s = "lsdfjslf 305 REDIRECTED";
         Pattern p = Pattern.compile("([\\d]+)");
         Matcher m = p.matcher(s);
-
-        System.out.println("Matches? " + m.matches());
-        System.out.println("Groupcount: " + m.groupCount());
-        System.out.println("Find? " + m.find());
-        if(m.find()){
-            System.out.println("Group: " + m.group(1));
-        }
-        else
-            System.out.println("No Match");
-
+        assertEquals(false, m.matches());
+        assertEquals(true, m.find());
         assertEquals("305", m.group(1));
+    }
+
+    @Test
+    public void testHttpResponseFormat()
+    {
+        String s = "[HTTP/1.1 200 OK]";
+        Pattern p = Pattern.compile("([\\d]{3})");
+        Matcher m = p.matcher(s);
+        assertEquals(false, m.matches());
+        assertEquals(true, m.find());
+        assertEquals("200", m.group(1));
     }
 
 

@@ -133,18 +133,14 @@ public class Fetcher {
 
             if (header.containsKey(null)){
                 List<String> l = header.get(null);
-                Pattern p = Pattern.compile(".*?([\\d]+).*?");
-                System.out.println("Should match");
+                Pattern p = Pattern.compile("([\\d]{3})");
                 Matcher m = p.matcher(l.toString());
-
-                System.out.println("matches? " + m.group(1));
-
-                details.put("Status_code", (m.matches())? m.group(1) : "not");
+                details.put("Status_code", (m.find())? m.group(1) : "");
             }
 
             details.put("Date", header.get("Date").toString());
-
             data.add(details);
+
         } catch (Exception e) {
             //todo: is the url not valid because not valid protocol
             //Matcher urlMatcher = URL_PATTERN.matcher(value);
