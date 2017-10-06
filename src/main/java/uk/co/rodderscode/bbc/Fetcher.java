@@ -87,19 +87,47 @@ public class Fetcher {
         jsonWriter.endObject();
 
 
-
         // collect stats
-        HashMap<String, Integer> stats;
-        for(HashMap details : rawData)
+        HashMap<String, Integer> stats = new HashMap<>();
+        for(HashMap site : rawData)
         {
-            System.out.println(rawData);
+
+            // it may be one of the invalid sites
+            if (site.containsKey("Status_code"))
+            {
+                String code = (String) site.get("Status_code");
+                if (stats.containsKey(code)){
+                    int counter = stats.get(code);
+                    stats.put(code, ++counter);
+                } else
+                    stats.put(code,  1);
+            }
+
         }
-            
-                
+
+
+        StringBuilder translatedVars = new StringBuilder();
+        JSONWriter jsonwriter2 = new JSONWriter(translatedVars).object();
+
+
+        ArrayList finalstats = new ArrayList();
+        Iterator it = stats.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+
+            HashMap<String, Integer> m = new HashMap<>();
+            m.put("Status_code", Integer.parseInt(pair.getKey().toString()));
+            m.put("Number_of_responses", Integer.parseInt(pair.getValue().toString()));
+
+            finalstats.add(m);
+        }
+
+        jsonwriter2.key("Stats").value(finalstats);
+        jsonwriter2.endObject();
         
+        System.out.println(translatedVars);
+            
 
-
-        // todo: compose maps
         // todo: output json
         // todo: polish
         // todo: how to deploy gradle
