@@ -26,6 +26,10 @@ public class Fetcher {
     }
 
 
+    public String getStats()
+    {
+        return "";
+    }
 
 
 
@@ -130,6 +134,7 @@ public class Fetcher {
             m.put("Number_of_responses", Integer.parseInt(pair.getValue().toString()));
 
             finalstats.add(m);
+            it.remove(); // avoids a ConcurrentModificationException
         }
 
         jsonwriter2.key("Stats").value(finalstats);
